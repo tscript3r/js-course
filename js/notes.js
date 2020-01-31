@@ -1,3 +1,5 @@
+const $enableAlerts = false;
+
 // variables
 {
     /*
@@ -325,4 +327,43 @@ console.log(`!(2<1 || 2>3)\t${ !( 2<1 || 2>3 ) }\n`); // true
             .addEventListener("click", removeClass);
     document.querySelector("#toggle-class-button")
             .addEventListener("click", toggleClass);
+
+    // element attribute manipulation
+    const urlElement = document.querySelector("#url");
+    urlElement.setAttribute("href", "https://www.google.com/");
+    if(urlElement.hasAttribute("href"))
+        console.log(url.getAttribute("href"));    
+    urlElement.removeAttribute("href");
+
+    // dataset - storing, receiving data in html elements
+    const pData = document.querySelector("#p-data");
+    pData.setAttribute("data-dynamic", "test");
+    console.log(pData.dataset.dbId);
+    console.log(pData.dataset.dynamic);
+}
+
+// Misc
+{
+    // sleep in JS, ms
+    setTimeout(100); 
+
+    // interval is basically an infinite loop
+    let i = 0;
+    setInterval(() => i++, 500);
+
+    
+    if($enableAlerts) {
+        // not recommended; alert
+        alert("Alert message");
+
+        // not recommended; confirmation returns boolean
+        if(confirm("Confirm?"))
+            console.log("great");
+        else
+            console.log("bye");
+
+        // not recommended; returns users input as string value
+        const password = prompt("Password");
+        console.log(password);
+    }
 }
