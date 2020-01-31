@@ -257,6 +257,8 @@ console.log(`!(2<1 || 2>3)\t${ !( 2<1 || 2>3 ) }\n`); // true
         DOM is not a part of JavaScript, JS gives only the ability to work with it
         DOM is represented by window class in JS. It's a global, one of the main 
         JS classes. Basiclly window class represents the window of the browser
+
+        https://developer.mozilla.org/pl/docs/Web/API/Element
     */
 
     // deprecated; most being seen function for getting elements by ID
@@ -285,8 +287,42 @@ console.log(`!(2<1 || 2>3)\t${ !( 2<1 || 2>3 ) }\n`); // true
     const secondNewLiElement = document.createElement("li");
     secondNewLiElement.textContent = "new list li element";
     newUlList.appendChild(secondNewLiElement);
-    document.body.appendChild(newUlList);
+    document.querySelector("#getting-element").appendChild(newUlList);
+    
+    // innerHTML holds inner content of the given element
+    const button = document.querySelector("button"); // === "click"
+    button.innerHTML = "<b>click</b>"
+
+    // outerHTML holds entire element with tags 
+    console.log(button.outerHTML); // === "<butto><b>click</b></button>"
+
+    // removeChild deleting content 
+    const containingDiv = document.querySelector("#delete-element");
+    const h1ToRemove = containingDiv.querySelector("#to-be-deleted");
+    containingDiv.removeChild(h1ToRemove);
+    document.body.removeChild(containingDiv);
+
+    // addEventListener https://developer.mozilla.org/pl/docs/Web/Events
+    document.querySelector("#on-click")
+            .addEventListener("click", () => console.log("click"));
+    document.querySelector("#on-select")
+            .addEventListener("mouseenter", () => console.log("entered"));
+    document.querySelector("#on-double-click")
+            .addEventListener("dblclick", () => console.log("double"));
+
+    // element style example
+    document.querySelector("#p-style").style.fontStyle = "italic";
 
     
-
+    // element class manipulation 
+    const manipulatedElement = document.querySelector("#p-manipulate");
+    const addClass = () => manipulatedElement.classList.add("new-color");
+    const removeClass = () => manipulatedElement.classList.remove("new-color");
+    const toggleClass = () => manipulatedElement.classList.toggle("new-color");
+    document.querySelector("#add-class-button")
+            .addEventListener("click", addClass);
+    document.querySelector("#remove-class-button")
+            .addEventListener("click", removeClass);
+    document.querySelector("#toggle-class-button")
+            .addEventListener("click", toggleClass);
 }
