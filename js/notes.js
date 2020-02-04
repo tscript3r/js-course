@@ -310,7 +310,8 @@ console.log(`!(2<1 || 2>3)\t${ !( 2<1 || 2>3 ) }\n`); // true
     document.querySelector("#on-select")
             .addEventListener("mouseenter", () => console.log("entered"));
     document.querySelector("#on-double-click")
-            .addEventListener("dblclick", () => console.log("double"));
+            .addEventListener("dblclick", (e) => console.log("double", e));
+    // e stands for MouseEvent, by and default is passed trhue
 
     // element style example
     document.querySelector("#p-style").style.fontStyle = "italic";
