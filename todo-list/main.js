@@ -1,3 +1,5 @@
+'use strict'
+
 let $todoInput;
 let $alertInfo;
 let $addButton;

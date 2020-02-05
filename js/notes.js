@@ -1,3 +1,4 @@
+'use strict'
 const $enableAlerts = false;
 
 // variables
@@ -367,4 +368,94 @@ console.log(`!(2<1 || 2>3)\t${ !( 2<1 || 2>3 ) }\n`); // true
         const password = prompt("Password");
         console.log(password);
     }
+}
+
+// OOP
+{
+    // declaring object 
+    const newObj = {
+        // fields - key : value
+        name : "Jack",
+        age: 44,
+        // adding field with resevered char
+        ['birth-date']: "12.12.12",
+
+        // nested object
+        car : {
+            brand: "Audi",
+            color: "black",
+            year: 2015
+        },
+        
+        // ES6 functions
+        sound () {},
+
+        // previous
+        oldSound : function (){
+            
+        }
+    }
+
+    // dynamic adding field
+    newObj.country = "Poland";
+    // adding field with JS resevered char
+    newObj['fav-color'] = 'blue';
+
+    // ES6 feature
+    const name = "doggy";
+    const age = 2;
+    const dog = {
+        name,
+        age
+        /*
+            same as:
+            name : name,
+            age : age
+        */
+    }
+
+    // removing fields from objects
+    delete dog.age;
+
+    // using fields inside object functions
+    const user = {
+        username : "andrew",
+        test () {
+            // console.log(username); // ReferenceError: username is not defined
+            console.log(this.username);
+        }
+    }
+    user.test();
+
+    // deprecated; declaring a constructor. First letter should be upper case
+    function User (name, age) {
+        this.name = name;
+        this.age = age;
+
+        this.hello = () => console.log(`Its ${this.name}:${this.age}`);
+    }
+    new User("Abc", 32).hello();
+    
+    // dynamic adding new functions / fields into declared class / object
+    User.prototype.bye = function() { console.log(`Bye ${this.age}`); }
+    new User("Cba", 23).bye();
+
+    console.log(`String==string = ${new String("test") == "test"}`); // true
+    console.log(`String===string = ${new String("test") === "test"}`); // false
+    const testString = "abc"; // primitve
+    testString.toUpperCase(); // converted only for this method to String class after its again primive
+
+    // iterating thru fields of an object
+    for (const data in newObj) {
+        console.log(data);
+    }
+
+    // strict mode - makes JS more sensitive if it comes to errors. Requiers 'use strict' to be added at beginning
+    {
+        // with strict mode - referenceError witout nope 
+        // const colors = ["a", "b", "c"];
+        // for (color of colors) // let / const / var missing for color
+        //     console.log(color);
+    }
+
 }
