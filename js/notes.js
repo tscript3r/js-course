@@ -450,12 +450,139 @@ console.log(`!(2<1 || 2>3)\t${ !( 2<1 || 2>3 ) }\n`); // true
         console.log(data);
     }
 
-    // strict mode - makes JS more sensitive if it comes to errors. Requiers 'use strict' to be added at beginning
+    // strict mode - makes JS more sensitive if it comes to errors. Requiers 'use strict' to be added at the beginning
     {
-        // with strict mode - referenceError witout nope 
+        // with strict mode - referenceError without nope 
         // const colors = ["a", "b", "c"];
         // for (color of colors) // let / const / var missing for color
         //     console.log(color);
+    }
+
+    const btns = document.querySelectorAll('button');
+
+    for(const btn of btns) {
+        btn.addEventListener('click', function () {console.log(this.innerText)});
+    }
+
+    // [call, apply, bind]
+    {
+        const movie = {
+            title: 'Avengers'
+        }
+        const showMovie = function (price, cinema) {
+            console.log(`Title: "${this.title}", ticket price: ${price}zł, cinema: ${cinema}`);
+        }
+        showMovie.call(movie, 15, "Best movie"); // calling function with setting the caller (this will be referencing to movie in this case)
+
+
+        function Movie(title, year) {
+            this.title = title;
+            this.year = year;
+        }
+        function ActionMovie(title, year) {
+            Movie.call(this, title, year); // ActionMovie inherits from Movie
+            this.category = "Action";
+        }
+        console.log(new ActionMovie('Fast', 2010));
+
+
+        function add(...args) {
+            let result = 0;
+            for (let i = 0; i < args.length; i++) 
+                result += args[i];
+            return `${result} ${this.currency}`
+        }
+        console.log(add.apply({currency : "PLN"}, [12, 34, 543]));
+
+        // function.call(OBJECT, ARGUMENTS)
+        // function.apply(OBJECT, ARRAY)
+
+        const colorsObject = {
+            colors : ['red', 'green'],
+            showColors() {
+                this.colors.forEach( 
+                    function(e, i) {
+                        console.log(this.colors[i]);
+                    }.bind(this) // without bind: Cannot read property 'colors' of undefined, sets the caller as this, so caller is one level up in this case
+                )
+            }
+        }
+        colorsObject.showColors();
+
+        const user = { 
+            name : 'Lily',
+            age: 23,
+            'fav-color': 'blue',
+            car : {
+                brand: 'Audi'
+            }
+        }
+
+        const print2 = function() {
+            console.log(this);
+            console.log(`${this.name} ${this.age} ${this['fav-color']} ${this.car.brand}`);
+        }
+
+        print2.call(user);
+
+        // Arrow functions do not have their own this
+    }
+
+    // classes
+    {
+        const OldExample = class {}
+
+        // defining
+        class Animal {
+            constructor(name, type) {
+                this.name = name;
+                this.type = type;
+            }
+            printDetails() {
+                console.log(`${this.name}, ${this.type}`);
+            }
+        }
+        const tiger = new Animal('tigr', 'tiger');
+        tiger.printDetails();
+
+        // little convention - underscore for private methods / fields
+
+        // extending
+        class CatAnimal extends Animal {
+            constructor(race) {
+                super('meow', 'cat');
+                this.race = race;
+            }
+        }
+        const cat = new CatAnimal('some');
+        cat.printDetails();
+    
+        const user = {
+            name : 'Lily',
+            age : 23
+        }
+        const pet = {
+            name : 'Drops',
+            type : 'dog'
+        }
+        console.log(Object.assign(user, pet)); // merging objects, right sided argument overrides same named properties
+
+        // hermetization getter / setter
+        const city = {
+            name : 'New York',
+            location : 'USA',
+
+            get name() {
+                return this.name;
+            },
+
+            /**
+             * @param {string} city
+             */
+            set name(city) {
+                return this.name = city;
+            }
+        }
     }
 
 }
