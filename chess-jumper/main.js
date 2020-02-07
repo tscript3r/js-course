@@ -32,12 +32,44 @@ class Board {
     _createField(elementName, elementClass, x, y, onClickCallable) {
         let field = document.createElement(elementName);
         field.classList.add(elementClass);
-        field.addEventListener("click", onClickCallable)
+        field.addEventListener("click", onClickCallable, false)
         return new Field(x, y, field);
     }
 
     _createNewLine() {
         return document.createElement("br");
+    }
+
+    mark(x, y) {
+        if(this._isInsideBoard(x, y)) {
+            if(this._allowMove(x, y)) {
+                this.board[x][y].mark();
+                this.lastMove = this.board[x][y];
+            }
+        }
+    }
+
+    _isInsideBoard(x, y) {
+        return x >= 0 && x < this.squareSize && y >= 0 && y < this.squareSize;
+    }
+
+    _allowMove(x, y) {
+        const fitPoints = (a, b) => {
+            if(this.lastMove.x == a + 2 && this.lastMove.y == b + 1)
+                return true;
+            if(this.lastMove.x == a + 2 && this.lastMove.y == b - 1)
+                return true;    
+            if(this.lastMove.x == a - 2 && this.lastMove.y == b + 1)
+                return true;
+            if(this.lastMove.x == a - 2 && this.lastMove.y == b - 1)
+                return true;
+            return false;
+        }
+
+        if(this.lastMove != undefined) {
+            return fitPoints(x, y) || fitPoints(y, x);
+        } else
+            return true;
     }
 
 }
@@ -47,7 +79,7 @@ class Field {
     constructor (x, y, element) {
         this.x = x;
         this.y = y;
-        this.checked = false;
+        this.marked = false;
         this.element = element;
         this.element.setAttribute($BUTTON_X_ATTRIBUTE, x);
         this.element.setAttribute($BUTTON_Y_ATTRIBUTE, y);
@@ -57,31 +89,43 @@ class Field {
         return this.element;
     }
 
+    get isMarked() {
+        return this.marked;
+    }
+
+    mark() {
+        this.element.classList.add("marked-button");
+        this.marked = true;
+    }
+
 }
 
 class ChessJumper {
 
-    _onClick(e) {
-        let selectedField = e.target;
-        let x = selectedField.getAttribute($BUTTON_X_ATTRIBUTE);
-        let y = selectedField.getAttribute($BUTTON_Y_ATTRIBUTE);
-        this._move(x, y);
+    move(x, y) {
+        if(this.board.lastMove != undefined)
+            console.log(`previous: ${this.board.lastMove.x}x${this.board.lastMove.y} | current: ${x}x${y}`);
+        this.board.mark(x, y);
     }
 
-    _move(x, y) {
-        console.log(`${x} ${y}`);
-    }
-
-    start(squareSize) {
+    start(squareSize, onClickEvent) {
         this.board = new Board(squareSize);
-        this.board.create($GAME_CLASS, $HTML_BUTTON_ELEMENT, $HTML_BUTTON_CLASS, this._onClick);
+        this.board.create($GAME_CLASS, $HTML_BUTTON_ELEMENT, $HTML_BUTTON_CLASS, onClickEvent);
     }
 
 }
 
 const main = () => {
     const chessJumper = new ChessJumper();
-    chessJumper.start(10);
+
+    const onClick = (e) => {
+        let selectedField = e.target;
+        let x = selectedField.getAttribute($BUTTON_X_ATTRIBUTE);
+        let y = selectedField.getAttribute($BUTTON_Y_ATTRIBUTE);
+        chessJumper.move(x, y);
+    }
+
+    chessJumper.start(10, onClick);
 }
 
 document.addEventListener("DOMContentLoaded", main);

@@ -30,3 +30,10 @@
     display: block;
     padding-bottom: 1%;
 }
+
+.marked-button {
+	background-color:greenyellow;
+}
+.marked-button:hover {
+	background-color:greenyellow;
+}
