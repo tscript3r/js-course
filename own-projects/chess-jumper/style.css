@@ -1,0 +1,59 @@
+body {
+	background: rgb(113, 43, 243);
+	background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgb(189, 47, 76) 100%);
+}
+
+.container {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+.board-button {
+	box-shadow: 0px 1px 0px 0px #fff6af;
+	background: rgb(63,94,251);
+	background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+    width: 3vw;
+	height: 3vw;
+	border-radius:6px;
+	border:1px solid #ffaa228a;
+	outline: none;
+	display:inline-block;
+	cursor:pointer;
+	color:rgba(255, 17, 0, 0);
+	padding: 0;
+	margin:0;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #d3ccfd;
+}
+.board-button:hover {
+	background: rgb(63,94,251);
+	background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+}
+
+.highlighted-button {
+	background: radial-gradient(circle, rgb(196, 103, 122) 0%, rgb(99, 125, 255) 100%);
+}
+
+.highlighted-button:hover {
+	background: radial-gradient(circle, rgb(196, 103, 122) 0%, rgb(99, 125, 255) 100%);;
+}
+
+.last-marked-button {
+	background: radial-gradient(circle, rgb(197, 41, 72) 0%, rgb(182, 194, 255) 100%);
+}
+
+.marked-button {
+	background: radial-gradient(circle, rgb(63, 95, 255) 0%, rgb(182, 45, 72) 100%);
+}
+
+.marked-button:hover {
+	background: radial-gradient(circle, rgb(99, 124, 247) 0%, rgba(252,70,107,1) 100%);
+}
+
