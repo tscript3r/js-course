@@ -586,3 +586,74 @@ console.log(`!(2<1 || 2>3)\t${ !( 2<1 || 2>3 ) }\n`); // true
     }
 
 }
+
+// APIs, Fetch, Promise, Async, Await, AXIOS
+{
+    // Fetch, Than, Catch
+    {
+        const url = "https://dog.ceo/api/breeds/image/random";
+        const fetchButton = document.querySelector(".fetch-button");
+        const img = document.querySelector(".dog-image");
+        const onClick = () => {
+            fetch(url)
+             .then(response => response.json())
+             .then(json => img.setAttribute("src", json.message))
+             .catch(error => console.log(error));
+        }
+        fetchButton.addEventListener("click", onClick);
+
+        // AXIOS
+        axios.get(url)
+            .then(res => img.setAttribute("src", res.data.message));
+    }
+
+    /*
+        AJAX - asynchronous JS and XML, currently instead of XML JSON is used
+        sending & receiving data without need to reload the page
+
+        fetch(url, {method: "POST"})
+    */
+
+    const jsonObject = {
+        "text": "text",
+        "bool": false,
+        "number": 25
+    }
+
+    // Promise 
+    function checkAge(age) {
+        return new Promise((resolve, reject) => {
+            if(age >= 18)
+                resolve("OK")
+            else
+                reject("NOPE");
+        })
+    }
+
+    const doubleCheck = (ageConfirm) => {
+        return new Promise((resolve, reject) => {
+            resolve('All good');
+        });
+    }
+
+    checkAge(22)
+        .then(res => {
+            console.log(res);
+            return doubleCheck(res);
+        })
+        .then(res => console.log(res))
+    
+    // above and bellow are basiclly same
+        
+    // asynchronous function 
+    async function checkAge2() {
+        try {
+            const age = await checkAge(22); // awaits checkAge to finish 
+            const dblCheck = await doubleCheck(age);
+            console.log(dblCheck);
+        } catch(error) {
+            console.error(error);
+        } 
+    }
+
+}
